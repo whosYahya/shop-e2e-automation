@@ -2,14 +2,14 @@
 
 ## Current state
 
-The repository has `@playwright/test`, one starter spec targeting `playwright.dev`, and Chromium UI coverage for the homepage, product search, and product details. Page objects live in `pages/`; UI specs live in `tests/ui/`. No API collection or cross-layer test is configured.
+The repository has `@playwright/test`, one starter spec targeting `playwright.dev`, and Chromium UI coverage for homepage, product search/details, cart, and safe account-form validation. Page objects live in `pages/`; UI specs live in `tests/ui/`. No API collection or cross-layer test is configured.
 
 ## Proposed implementation order
 
 1. Framework setup: JavaScript config, environment-driven base URL, Chromium project, failure evidence, scripts, ignores, and directory layout.
-2. UI smoke: homepage/navigation, product search (matching and empty result), product details. Implemented and passed in the targeted Chromium run.
-3. Listing and cart behavior after verifying safe cleanup.
-4. Registration, login, and wishlist using synthetic data only after account-retention behavior is understood.
+2. UI smoke: homepage/navigation, product search (matching and empty result), product details. Implemented and passed in the Chromium UI suite.
+3. Listing and cart behavior after verifying safe cleanup. Cart add/update/remove and zero/negative-quantity behavior are implemented with cleanup.
+4. Registration and login: blank registration validation is automated; account creation is deferred due unknown persistence/cleanup, and repeated login attempts are blocked by the public demo's one-hour throttle. Wishlist authenticated behavior remains pending.
 5. Checkout only as far as safely observable, with no payment submission or final order placement.
 6. API investigation and Postman only if first-party documentation or network evidence confirms a supported JSON contract.
 7. Integration only if a documented API and appropriate test data enable a genuine cross-layer check.

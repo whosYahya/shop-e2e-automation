@@ -21,7 +21,7 @@ The repository ignores `.env` files, `node_modules`, `test-results`, and generat
 | Command | Purpose | Current status |
 |---|---|---|
 | `npm test` | Run all discovered Playwright tests | Runs the existing starter tests and the implemented UI tests |
-| `npm run test:ui` | Run UI specs in `tests/ui/` | Runs the four current homepage, search, and product detail cases |
+| `npm run test:ui` | Run UI specs in `tests/ui/` | Runs homepage, search, product, cart, and safe authentication cases (9 tests currently) |
 | `npm run test:api` | Run API specs in `tests/api/` | Directory is prepared; no API specs exist yet, so Playwright currently reports no tests found |
 | `npm run test:headed` | Run all discovered tests in a visible browser | Uses the all-tests discovery scope |
 | `npm run test:debug` | Run all discovered tests in Playwright debug mode | Uses the all-tests discovery scope |

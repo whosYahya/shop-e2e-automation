@@ -22,15 +22,15 @@
 |---|---|---|
 | Homepage/category/search | Known visible labels and broad query terms; assert meaningful result shape | Read-only; do not rely on catalog being unchanged |
 | Product details | Select a product discovered from current results | Do not submit purchase actions during smoke checks |
-| Cart | One low-risk catalog item, quantity one | Remove item after test; stop if cleanup is unavailable |
-| Registration/login | Unique generated synthetic identity and test-only password | Account persistence/cleanup is unknown; defer creation until retention and policy are understood |
+| Cart | One visible catalog product (`iPhone`), quantity one, then two, zero, or -1 | Remove item after test; cleanup is asserted; stop if cleanup is unavailable |
+| Registration/login | Blank registration form for validation; synthetic invalid login only for manual reconnaissance | Registration success can create persistent data and has no verified cleanup. Login attempts triggered a one-hour lockout after repeated submissions, so invalid-login and empty-login submits are not automated against the shared demo. |
 | Wishlist | A synthetic account and visible catalog item | Remove entry; authenticated flow is unverified |
 | Checkout | Synthetic non-payment fields only, if safely accessible | Do not enter payment information or place a real order; stop before final order action |
 | API | No data defined | Wait for a documented supported API and safe environment |
 
 ## Generation and storage
 
-When automation is added, generate unique identifiers in test code using a timestamp/random suffix. Keep deterministic fixture values for non-unique search terms and product selection. Store non-secret defaults in source-controlled fixtures only when stable. Keep `.env` files and generated evidence out of Git; provide a sanitized `.env.example` only in the framework phase if needed.
+For future account workflows, generate unique identifiers in test code using a timestamp/random suffix only after a disposable account flow is confirmed. Keep deterministic fixture values for non-unique search terms and product selection. Store non-secret defaults in source-controlled fixtures only when stable. Keep `.env` files and generated evidence out of Git; provide a sanitized `.env.example` only if needed.
 
 ## Unverified assumptions
 
@@ -38,3 +38,4 @@ When automation is added, generate unique identifiers in test code using a times
 - Whether created accounts, cart state, wishlist entries, or orders can be deleted.
 - Which product options and quantity limits are enforced.
 - Whether a dedicated API or test environment exists.
+- Whether the login-attempt lockout is scoped to the account, client session, or public demo; avoid repeated login attempts until a dedicated test environment is available.
