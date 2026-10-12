@@ -24,7 +24,7 @@ The initial coverage target is storefront navigation, product search, category b
 | Registration | Observed | Title `Register Account`; fields for first/last name, email, telephone, password/confirmation, customer group, newsletter, agreement, and Continue control. Submitting a blank form showed field errors and a privacy-policy warning; no account was created. |
 | Login | Observed with throttle limitation | Title `Account Login`, labeled email/password fields and Login control. One synthetic invalid attempt was rejected; a second submission caused a one-hour login-attempt lockout warning. Repeated login submissions are not safe for routine automation on this shared demo. |
 | Wishlist | Observed, unauthenticated only | Direct wishlist navigation redirected to the login page. Signed-in wishlist behavior is unverified. |
-| Checkout/order confirmation | Blocked safely | Direct checkout navigation with an empty cart redirected to `checkout/cart`. Checkout steps, payment methods, and order confirmation remain unverified. |
+| Checkout | Partially observed and automated safely | An empty cart redirects to `checkout/cart`. With an iPhone in the cart, checkout offers Login, Register Account, and Guest Checkout. The review shows product, quantity, and totals; Cash On Delivery and Flat Rate are available and selected by default. A blank guest submission remained on the checkout form without a field-specific message. The displayed Flat Rate and order-summary shipping amounts differed during inspection, so fixed totals are not asserted. Testing stops before entering customer/payment data or placing an order. |
 | API | Unverified | No API documentation or API endpoint has been established. Ordinary OpenCart HTML routes observed in the browser are not evidence of a REST API. |
 
 ## Approach
@@ -48,7 +48,7 @@ The initial coverage target is storefront navigation, product search, category b
 - No authentication credentials or API contract were provided.
 - Successful registration may create persistent data and checkout may create an order; account creation and order placement are excluded until safe cleanup/test-environment behavior is verified.
 - Some displayed category labels may be promotional or map to shared destinations. Verify destination and product content before treating each as a distinct supported module.
-- The original starter test still targets Playwright's website. Application UI tests now cover homepage, search, product details, cart, and safe authentication form checks.
+- The original starter test still targets Playwright's website. Application UI tests cover homepage, search, product details, cart, safe authentication form checks, and the checkout boundary described above.
 
 ## Exit criteria for Phase 1
 
