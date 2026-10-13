@@ -8,7 +8,7 @@ Playwright Test framework for the LambdaTest OpenCart playground. The project us
 - npm
 - Playwright's Chromium browser (`npx playwright install chromium`)
 
-Install locked dependencies with `npm ci`.
+Install locked dependencies with `npm ci`. The GitHub Actions workflow pins Node.js `24.21.0`; the Playwright dependency supports Node.js 20 and newer.
 
 ## Configuration
 
@@ -45,4 +45,18 @@ postman/
 docs/
 ```
 
-The Postman folders are placeholders. No supported REST API for the storefront has been verified, so there is no ShopFlow Postman collection or environment export yet. The user-reported Postman Echo exercise is separate learning work and does not count as e-commerce API coverage. See [docs/api-test-plan.md](docs/api-test-plan.md) for the evidence, collection plan, and validation status.
+## GitHub Actions
+
+The existing `.github/workflows/playwright.yml` runs on pushes and pull requests targeting `main` or `master`. Its single UI regression job uses Node.js `24.21.0`, installs dependencies with `npm ci`, installs Chromium, and runs `npx playwright test tests/ui --workers=1`. This executes the e-commerce UI specs under `tests/ui/` once; the retained `playwright.dev` starter tests are excluded from that job.
+
+Open the repository's **Actions** tab and select a workflow run to review its job logs and status. From the run summary, download the `playwright-report` artifact for the HTML report and `playwright-test-results` for failure screenshots, traces, and other Playwright output. Both artifacts are retained for 30 days when the run is not cancelled.
+
+Reproduce the UI job locally with:
+
+```sh
+npm ci
+npx playwright install --with-deps chromium
+npx playwright test tests/ui --workers=1
+```
+
+The LambdaTest storefront is the UI target. A separate local practice API would be a different target with its own server, contract, data, and Postman collection. This repository currently has no `api-server/`, verified storefront REST API, or configured Postman collection, so the workflow has no API job. The existing `npm run test:api` remains a Playwright placeholder and does not run Postman. The Echo learning exercise is not backend coverage. See [docs/api-test-plan.md](docs/api-test-plan.md) for the API gate and next steps.
