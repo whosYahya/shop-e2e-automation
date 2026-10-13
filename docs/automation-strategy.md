@@ -2,7 +2,7 @@
 
 ## Current state
 
-The repository has `@playwright/test`, one starter spec targeting `playwright.dev`, and Chromium UI coverage for homepage, product search/details, cart, and safe account-form validation. Page objects live in `pages/`; UI specs live in `tests/ui/`. No API collection or cross-layer test is configured.
+The repository has `@playwright/test`, one starter spec targeting `playwright.dev`, and Chromium UI coverage for homepage, product search/details, cart, safe account-form validation, and the safe checkout boundary. Page objects live in `pages/`; UI specs live in `tests/ui/`. No storefront API collection or cross-layer test is configured.
 
 ## Proposed implementation order
 
@@ -11,7 +11,7 @@ The repository has `@playwright/test`, one starter spec targeting `playwright.de
 3. Listing and cart behavior after verifying safe cleanup. Cart add/update/remove and zero/negative-quantity behavior are implemented with cleanup.
 4. Registration and login: blank registration validation is automated; account creation is deferred due unknown persistence/cleanup, and repeated login attempts are blocked by the public demo's one-hour throttle. Wishlist authenticated behavior remains pending.
 5. Checkout only as far as safely observable, with no payment submission or final order placement.
-6. API investigation and Postman only if first-party documentation or network evidence confirms a supported JSON contract.
+6. API investigation and Postman only after first-party documentation or reliable observed network evidence confirms a supported JSON contract. Phase 6 inspection did not establish a storefront API; see `docs/api-test-plan.md`.
 7. Integration only if a documented API and appropriate test data enable a genuine cross-layer check.
 
 ## Design
@@ -34,7 +34,9 @@ The repository has `@playwright/test`, one starter spec targeting `playwright.de
 
 ## API and integration gates
 
-No REST API is verified. OpenCart HTML routes observed for home, search, product, account, and checkout are page routes and are not evidence of a JSON API. Before adding Postman requests, identify first-party documentation or inspect a genuine JSON request/response, then validate method, safety, schema, and test data. Do not issue destructive requests. If no supported endpoint exists, document that UI and API suites remain independent and suggest a controlled practice API/local service separately.
+No REST API for the LambdaTest storefront is verified. The homepage network observation captured its HTML document and no first-party JSON `fetch`/XHR request on that page load. OpenCart HTML routes are not evidence of a REST API, and generic OpenCart documentation does not establish an API contract or enabled service for this specific demo. Do not add storefront requests until a supported endpoint, response contract, and safe test data are confirmed.
+
+The user-reported Postman Echo request with four passing assertions is a learning exercise only; it is not ShopFlow API coverage and was not rerun for Phase 6. The intended `ShopFlow - API Regression` collection remains deferred, with no export or environment file yet. When a real target is verified, use Postman Collection v2.1 JSON, run it manually with Postman's Collection Runner, and consider Newman for local-file execution in a later CI phase. Keep the UI and API suites independent unless a documented API supports a valid cross-layer check.
 
 ## Locator and change management
 

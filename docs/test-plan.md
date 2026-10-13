@@ -25,7 +25,7 @@ The initial coverage target is storefront navigation, product search, category b
 | Login | Observed with throttle limitation | Title `Account Login`, labeled email/password fields and Login control. One synthetic invalid attempt was rejected; a second submission caused a one-hour login-attempt lockout warning. Repeated login submissions are not safe for routine automation on this shared demo. |
 | Wishlist | Observed, unauthenticated only | Direct wishlist navigation redirected to the login page. Signed-in wishlist behavior is unverified. |
 | Checkout | Partially observed and automated safely | An empty cart redirects to `checkout/cart`. With an iPhone in the cart, checkout offers Login, Register Account, and Guest Checkout. The review shows product, quantity, and totals; Cash On Delivery and Flat Rate are available and selected by default. A blank guest submission remained on the checkout form without a field-specific message. The displayed Flat Rate and order-summary shipping amounts differed during inspection, so fixed totals are not asserted. Testing stops before entering customer/payment data or placing an order. |
-| API | Unverified | No API documentation or API endpoint has been established. Ordinary OpenCart HTML routes observed in the browser are not evidence of a REST API. |
+| API | Unverified; no suitable endpoint found | A 2026-10-13 homepage network observation captured the first-party HTML document and no first-party JSON `fetch`/XHR request on that page load. No site-specific API contract or endpoint was established. Other application flows remain unobserved at the network layer. |
 
 ## Approach
 
